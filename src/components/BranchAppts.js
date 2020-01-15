@@ -22,7 +22,6 @@ const BranchAppts = props => {
   const chicAppts = appts.filter(el => {
     return +el.office_id === 7;
   });
-  //   setAppts([columbAppts, slcAppts]);
   let toMap = [columbAppts, slcAppts, chicAppts];
   let mapper = toMap.map((el, i) => {
     let initRodent = el.filter(e => {
@@ -38,6 +37,8 @@ const BranchAppts = props => {
     let mole = el.filter(e => {
       return +e.service_type === 161;
     }).length;
+
+
     return (
       <Doughnut
         key={i}
@@ -65,7 +66,7 @@ const BranchAppts = props => {
           cutoutPercentage: 45,
           title: {
             display: true,
-            text: "Completed Services breakdown",
+            text: "Completed Services breakdown By Branch",
             fontSize: 33
           }
         }}
