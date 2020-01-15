@@ -4,9 +4,12 @@ import axios from "axios";
 
 const BranchAppts = props => {
   const [appts, updateAppts] = useState([]);
-  const [apptsByBranch, setAppts] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost/7979/appts").then(res => updateAppts(res.data));
+    axios.get("http://localhost:7979/appts").then(res => {
+      updateAppts(res.data);
+    });
+
+    console.log("afweoifjawoeifjawoeijfa", appts);
   }, []);
 
   const columbAppts = appts.filter(el => {
@@ -15,53 +18,57 @@ const BranchAppts = props => {
   const slcAppts = appts.filter(el => {
     return +el.office_id === 6;
   });
-//   setAppts([columbAppts, slcAppts]);
-let toMap=[columbAppts, slcAppts]
-  let mapper = toMap.map(el => {
-console.log(el)
+
+  const chicAppts = appts.filter(el => {
+    return +el.office_id === 7;
+  });
+  //   setAppts([columbAppts, slcAppts]);
+  let toMap = [columbAppts, slcAppts, chicAppts];
+  let mapper = toMap.map((el, i) => {
+    let initRodent = el.filter(e => {
+      return +e.service_type === 150;
+    }).length;
+    let pest = el.filter(e => {
+      return +e.service_type === 57;
+    }).length;
+
+    let rodent = el.filter(e => {
+      return +e.service_type === 71;
+    }).length;
+    let mole = el.filter(e => {
+      return +e.service_type === 161;
+    }).length;
     return (
       <Doughnut
-      key={el.office_id}
+        key={i}
         data={{
-          labels: ["pest control", "rodent", "mole barrier"],
+          labels: ["pest control", "rodent", "mole barrier", "init rodent"],
           datasets: [
             {
-              data: [
-                el.filter(e => {
-                  return +e.service_type === 57;
-                }).length,
-                el.filter(e => {
-                  return +e.service_type === 71;
-                }).length,
-                el.filter(e => {
-                  return +e.service_type === 161;
-                }).length
-              ], 
-              backgroundColor:[
-                'rgba(0,190,144,.5)', 
-                'rgba(100,255,255,.5)', 
-                'rgba(100,0,255,.5)', 
-                'rgba(0,100,100,.5)', 
-                'rgba(255,255,0,.5)', 
-            ],
-              hoverBackgroundColor:[
-                'rgba(0,190,144,1)', 
-                'rgba(100,255,255,1)', 
-                'rgba(100,0,255,1)', 
-                'rgba(0,100,100,1)', 
-                'rgba(255,255,0,1)', 
-            ],
+              data: [pest, rodent, mole, initRodent],
+              backgroundColor: [
+                "rgba(0,190,144,.5)",
+                "rgba(100,100,255,.5)",
+                "rgba(100,0,255,.5)",
+                "rgba(200,0,255,.5)"
+              ],
+              hoverBackgroundColor: [
+                "rgba(0,190,144,1)",
+                "rgba(100,255,255,1)",
+                "rgba(100,0,255,1)",
+                "rgba(200,255,255,1)"
+              ]
             }
           ]
         }}
         options={{
-            cutoutPercentage: 45,
-            title:{
-                display:true, 
-                text:'Completed Services breakdown', 
-                fontSize:33,
-            }
-          }}
+          cutoutPercentage: 45,
+          title: {
+            display: true,
+            text: "Completed Services breakdown",
+            fontSize: 33
+          }
+        }}
       />
     );
   });
