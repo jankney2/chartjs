@@ -8,7 +8,6 @@ const Donut = () => {
   const [subs, updateSubs] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:7979/subs").then(res => {
-      console.log(res.data, "data");
       updateSubs(res.data);
     });
   }, []);
@@ -20,10 +19,10 @@ const Donut = () => {
 
   return (
     <div>
-      Heya it's a donut!
+
       <Doughnut
         data={{
-          labels: ["Pest Control", "Rodent", "FleaTick", "MoleBarr",],
+          labels: ["Pest Control", "Rodent", "Flea/Tick reduction", "Mole Barrier",],
           datasets: [
             {
               data: [pestCount, rodentCount, fleaTick, moleBarr,], 
@@ -45,7 +44,12 @@ const Donut = () => {
           ]
         }}
         options={{
-          cutoutPercentage: 50
+          cutoutPercentage: 45,
+          title:{
+              display:true, 
+              text:'December Subscription breakdown', 
+              fontSize:33,
+          }
         }}
       />
     </div>
