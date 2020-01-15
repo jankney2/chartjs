@@ -5,7 +5,7 @@ import axios from "axios";
 const Home = () => {
   const [appts, setAppts] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:7979/appts").then(res => {
+    axios.get("http://localhost:7979/emps").then(res => {
       console.log(res);
       setAppts(res.data);
     });
@@ -38,13 +38,12 @@ const Home = () => {
           labels: [0,"columbus", "salt lake", 'cherry hill', 'chicago', 'princeton', 'philly'],
           datasets: [
             {
-                label:['service pros'],
+              label:['hello',],
               barPercentage: .5,
               barThickness: 100,
               minBarLength: 0,
               data: [0,columbCount.length,chillCount.length, slcCount.length, chicCount.length, princeCount.length, philCount.length],
               backgroundColor: [
-                  'red',
                   "rgba(0,255,255,1)",
                   "rgba(0,255,0,1)",
                   "rgba(0,0,255,1)",
@@ -55,6 +54,13 @@ const Home = () => {
                 ]
             }
           ]
+        }}
+      
+        options={{
+          title:{
+            display:true, 
+            text:'service pro count per branch'
+          }
         }}
       />
     </div>
